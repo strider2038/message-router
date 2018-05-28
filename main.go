@@ -1,17 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+
+	"bitbucket.org/strider2038/event-router/handling"
 )
 
 func main() {
-	http.HandleFunc("/", postHandler)
-	log.Println("Listening...")
-	http.ListenAndServe(":3000", nil)
-}
+	handler := handling.MessageCollectionRequestHandler{}
+	http.HandleFunc("/", handler.HandleRequest)
 
-func postHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello")
+	log.Println("Starting server...")
+	err := http.ListenAndServe(":3000", nil)
+	log.Fatal(err)
 }

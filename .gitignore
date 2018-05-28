@@ -1,0 +1,5 @@
+# vendor packages
+vendor/
+
+# compiled application
+event-router
