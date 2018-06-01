@@ -3,11 +3,19 @@ package handling
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	mockHttp "bitbucket.org/strider2038/event-router/mocks/http"
+	"github.com/golang/mock/gomock"
+	"net/http"
 )
 
 func TestHandleRequest_emptyBody_httpErrorReturned(t *testing.T) {
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+	writer := mockHttp.NewMockResponseWriter(mockController)
 	handler := MessageCollectionRequestHandler{}
+	request := http.Request{}
 
-	assert.Equal(t, 1, 1)
+	writer.EXPECT().Write([]byte("Hello"))
+
+	handler.HandleRequest(writer, &request)
 }
