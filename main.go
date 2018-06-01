@@ -4,11 +4,11 @@ import (
 	"log"
 	"net/http"
 
-	"bitbucket.org/strider2038/event-router/handling"
+	"bitbucket.org/strider2038/event-router/requestHandling"
 )
 
 func main() {
-	handler := handling.MessageCollectionRequestHandler{}
+	handler := requestHandling.MessageCollectionRequestHandler{}
 	http.HandleFunc("/", handler.HandleRequest)
 
 	log.Println("Starting server...")

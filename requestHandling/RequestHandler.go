@@ -1,4 +1,4 @@
-package handling
+package requestHandling
 
 import "net/http"
 
