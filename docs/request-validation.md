@@ -13,15 +13,7 @@
 [
     {
         "topic": "string",
-        "message": {
-            "headers": {
-                "message_id": "string",
-                "timestamp": "float", // unix timestamp
-                "serializationId": "string"
-            },
-            "properties": {},
-            "body": {}
-        }
+        "message": { }
     }
 ]
 ```
