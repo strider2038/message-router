@@ -5,12 +5,16 @@ import (
 	"net/http"
 
 	"bitbucket.org/strider2038/event-router/requestHandling"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	validator := requestHandling.MessageCollectionRequestValidator{}
-	handler := requestHandling.NewMessageCollectionRequestHandler(validator)
-	http.HandleFunc("/", handler.HandleRequest)
+	handler := requestHandling.NewMessageCollectionRequestHandler()
+
+	router := mux.NewRouter()
+	router.HandleFunc("/", handler.HandleRequest).Methods("POST")
+
+	http.Handle("/", router)
 
 	log.Println("Starting server...")
 	err := http.ListenAndServe(":3000", nil)
