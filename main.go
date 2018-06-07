@@ -8,7 +8,8 @@ import (
 )
 
 func main() {
-	handler := requestHandling.MessageCollectionRequestHandler{}
+	validator := requestHandling.MessageCollectionRequestValidator{}
+	handler := requestHandling.NewMessageCollectionRequestHandler(validator)
 	http.HandleFunc("/", handler.HandleRequest)
 
 	log.Println("Starting server...")
