@@ -13,4 +13,27 @@ POST http://localhost:3000/invalid
 POST http://localhost:3000
 Content-Type: application/json
 
+[
+	{
+		"something": "invalid"
+	}
+]
+
+###
+
+POST http://localhost:3000
+Content-Type: application/json
+
+[
+	{
+		"topic": "TopicName",
+		"message": {
+			"property": "value",
+			"object": {
+				"a": 1
+			}
+		}
+	}
+]
+
 ###

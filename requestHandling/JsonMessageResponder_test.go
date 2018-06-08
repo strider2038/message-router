@@ -1,12 +1,13 @@
 package requestHandling
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/tidwall/gjson"
 )
 
 func TestWriteResponse_statusAndTitle_jsonResponseCreatedAndWritten(t *testing.T) {

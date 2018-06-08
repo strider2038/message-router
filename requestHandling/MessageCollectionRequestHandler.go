@@ -1,7 +1,10 @@
 package requestHandling
 
 import (
+	"encoding/json"
 	"net/http"
+
+	"bitbucket.org/strider2038/event-router/messaging"
 )
 
 type messageCollectionRequestHandler struct {
@@ -13,5 +16,12 @@ func NewMessageCollectionRequestHandler(responder Responder) *messageCollectionR
 }
 
 func (handler messageCollectionRequestHandler) HandleRequest(writer http.ResponseWriter, request *http.Request) {
-	handler.responder.WriteResponse(writer, http.StatusOK, "All messages were successfully sent to queue")
+	messages := make([]messaging.RoutedMessage, 0)
+	err := json.NewDecoder(request.Body).Decode(&messages)
+
+	if err != nil {
+		handler.responder.WriteResponse(writer, http.StatusBadRequest, err.Error())
+	} else {
+		handler.responder.WriteResponse(writer, http.StatusOK, "All messages were successfully sent to queue")
+	}
 }
