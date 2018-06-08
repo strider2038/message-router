@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	handler := requestHandling.NewMessageCollectionRequestHandler()
+	responder := requestHandling.JsonMessageResponder{}
+	handler := requestHandling.NewMessageCollectionRequestHandler(responder)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", handler.HandleRequest).Methods("POST")
