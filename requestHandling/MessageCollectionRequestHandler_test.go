@@ -3,30 +3,21 @@ package requestHandling
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/tidwall/gjson"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
-	"strings"
+
+	"github.com/golang/mock/gomock"
 )
 
 func TestHandleRequest_validRequest_okReturned(t *testing.T) {
-	responder := JsonMessageResponder{}
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+	responder := NewMockResponder(mockController)
 	handler := NewMessageCollectionRequestHandler(responder)
-	bodyReader := strings.NewReader("body")
-	request := httptest.NewRequest("POST", "/", bodyReader)
-	request.Header.Set("Content-Type", "application/json; charset=utf-8")
+	request := httptest.NewRequest("POST", "/", nil)
 	writer := httptest.NewRecorder()
 
-	handler.HandleRequest(writer, request)
-	response := writer.Result()
-	responseBody, _ := ioutil.ReadAll(response.Body)
-	contentType := response.Header.Get("Content-Type")
+	responder.EXPECT().WriteResponse(writer, http.StatusOK, "All messages were successfully sent to queue")
 
-	assert.Equal(t, http.StatusOK, response.StatusCode)
-	assert.Contains(t, string(responseBody), "message")
-	message := gjson.Get(string(responseBody), "message").String()
-	assert.Contains(t, message, "All messages were successfully sent to queue")
-	assert.Contains(t, contentType, "application/json")
+	handler.HandleRequest(writer, request)
 }
