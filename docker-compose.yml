@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+    zookeeper:
+        container_name: zookeeper
+        image: zookeeper:latest
+        environment:
+            ZOO_PORT: 2181
+
+    kafka:
+        container_name: kafka
+        image: confluentinc/cp-kafka
+        hostname: kafka
+        depends_on:
+            - zookeeper
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+            KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        ports:
+            - "9092:9092"
+
+    kafka_rest:
+        container_name: kafka-rest
+        image: confluentinc/cp-kafka-rest
+        depends_on:
+            - kafka
+        environment:
+            KAFKA_REST_HOST_NAME: localhost
+            KAFKA_REST_ZOOKEEPER_CONNECT: zookeeper:2181
+
+    kafka_topics_ui:
+        container_name: kafka-topics-ui
+        image: landoop/kafka-topics-ui
+        depends_on:
+            - kafka_rest
+        ports:
+            - "8001:8000"
+        environment:
+            KAFKA_REST_PROXY_URL: "http://kafka:8082"
+            PROXY: "true"
