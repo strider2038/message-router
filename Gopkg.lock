@@ -32,6 +32,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/segmentio/kafka-go"
+  packages = ["."]
+  revision = "536dc150964a6758b374f98863976c0f7aa5956e"
+
+[[projects]]
   name = "github.com/stretchr/testify"
   packages = ["assert"]
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
@@ -58,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6bf26f2b54aefe53b3d54ae6556c0aecd131a6b7beacf03d70dbaf6a329412ef"
+  inputs-digest = "b9d7ea3b2b2d03df997ebdfd53cb4cbe5f2b785a2ef894d57d7923b9bfe5c48e"
   solver-name = "gps-cdcl"
   solver-version = 1
