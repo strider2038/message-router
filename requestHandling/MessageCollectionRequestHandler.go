@@ -9,10 +9,14 @@ import (
 
 type messageCollectionRequestHandler struct {
 	responder Responder
+	producer  messaging.MessageProducer
 }
 
-func NewMessageCollectionRequestHandler(responder Responder) *messageCollectionRequestHandler {
-	return &messageCollectionRequestHandler{responder}
+func NewMessageCollectionRequestHandler(
+	responder Responder,
+	producer messaging.MessageProducer,
+) *messageCollectionRequestHandler {
+	return &messageCollectionRequestHandler{responder, producer}
 }
 
 func (handler messageCollectionRequestHandler) HandleRequest(writer http.ResponseWriter, request *http.Request) {
@@ -22,6 +26,7 @@ func (handler messageCollectionRequestHandler) HandleRequest(writer http.Respons
 	if err != nil {
 		handler.responder.WriteResponse(writer, http.StatusBadRequest, err.Error())
 	} else {
+		handler.producer.Produce(messages)
 		handler.responder.WriteResponse(writer, http.StatusOK, "All messages were successfully sent to queue")
 	}
 }
