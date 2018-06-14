@@ -21,11 +21,7 @@ func TestKafkaMessageProducer_Produce_singleMessage_messageSentToKafkaByWriter(t
 	defer mockController.Finish()
 	factory := NewMockKafkaWriterFlyweight(mockController)
 	producer := NewKafkaMessageProducer(factory)
-	// var writer KafkaWriter
-	writer := kafka.NewWriter(kafka.WriterConfig{
-		Brokers: []string{"localhost:9092"},
-		Topic:   "test",
-	})
+	writer := NewMockKafkaWriter(mockController)
 	messageContents := make(map[string]interface{})
 	messages := make([]RoutedMessage, 0)
 	messages = append(messages, RoutedMessage{"topic", messageContents})

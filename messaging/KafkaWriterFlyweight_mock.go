@@ -6,7 +6,6 @@ package messaging
 
 import (
 	gomock "github.com/golang/mock/gomock"
-	kafka_go "github.com/segmentio/kafka-go"
 	reflect "reflect"
 )
 
@@ -34,9 +33,9 @@ func (m *MockKafkaWriterFlyweight) EXPECT() *MockKafkaWriterFlyweightMockRecorde
 }
 
 // GetWriterForTopic mocks base method
-func (m *MockKafkaWriterFlyweight) GetWriterForTopic(topicName string) *kafka_go.Writer {
+func (m *MockKafkaWriterFlyweight) GetWriterForTopic(topicName string) *KafkaWriter {
 	ret := m.ctrl.Call(m, "GetWriterForTopic", topicName)
-	ret0, _ := ret[0].(*kafka_go.Writer)
+	ret0, _ := ret[0].(*KafkaWriter)
 	return ret0
 }
 
