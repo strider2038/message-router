@@ -19,7 +19,7 @@ func NewMessageCollectionRequestHandler(
 	return &messageCollectionRequestHandler{responder, producer}
 }
 
-func (handler messageCollectionRequestHandler) HandleRequest(writer http.ResponseWriter, request *http.Request) {
+func (handler *messageCollectionRequestHandler) HandleRequest(writer http.ResponseWriter, request *http.Request) {
 	messages := make([]messaging.RoutedMessage, 0)
 	err := json.NewDecoder(request.Body).Decode(&messages)
 
