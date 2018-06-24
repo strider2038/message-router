@@ -11,6 +11,7 @@ COPY . /go/src/bitbucket.org/strider2038/event-router
 WORKDIR "/go/src/bitbucket.org/strider2038/event-router"
 
 RUN dep ensure \
-    && go build
+    && go build \
+    && chmod +x event-router
 
-ENTRYPOINT "event-router"
+ENTRYPOINT [ "event-router" ]

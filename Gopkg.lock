@@ -2,28 +2,22 @@
 
 
 [[projects]]
+  name = "github.com/asaskevich/govalidator"
+  packages = ["."]
+  revision = "ccb8e960c48f04d6935e72476ae4a51028f9e22f"
+  version = "v9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/bitwurx/jrpc2"
+  packages = ["."]
+  revision = "b65bc4ce39da111a77311a3a07be21b6120ad796"
+
+[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
   version = "v1.1.0"
-
-[[projects]]
-  name = "github.com/golang/mock"
-  packages = ["gomock"]
-  revision = "c34cdb4725f4c3844d095133c6e40e448b86589b"
-  version = "v1.1.1"
-
-[[projects]]
-  name = "github.com/gorilla/context"
-  packages = ["."]
-  revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
-  version = "v1.1.1"
-
-[[projects]]
-  name = "github.com/gorilla/mux"
-  packages = ["."]
-  revision = "e3702bed27f0d39777b0b37b664b6280e8ef8fbf"
-  version = "v1.6.2"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -64,15 +58,9 @@
   packages = ["."]
   revision = "1731857f09b1f38450e2c12409748407822dc6be"
 
-[[projects]]
-  branch = "master"
-  name = "golang.org/x/net"
-  packages = ["context"]
-  revision = "1e491301e022f8f977054da4c2d852decd59571f"
-
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "0b8a5626cb0b8ae95f91708c53f2a4f701fba74cd5babd68ba0d012cdf38e474"
+  inputs-digest = "7119e6320b4bf66dae7fb3784bb8c7087547346cf24f567dabf57aef4bebe0f6"
   solver-name = "gps-cdcl"
   solver-version = 1

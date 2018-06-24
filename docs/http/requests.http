@@ -1,39 +1,113 @@
-GET http://localhost:3000
-
-###
-
-POST http://localhost:3000
-
-###
-
-POST http://localhost:3000/invalid
-
-###
-
-POST http://localhost:3000
+POST http://localhost:3000/rpc
 Content-Type: application/json
 
 [
-	{
-		"something": "invalid"
-	}
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {},
+        "id": 1
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": ""
+        },
+        "id": 2
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "topic"
+        },
+        "id": 3
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "topic",
+            "message": {
+            }
+        },
+        "id": 4
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "topic",
+            "message": {
+                "value": {
+                }
+            }
+        },
+        "id": 5
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "topic",
+            "message": {
+                "value": {
+                    "property": true
+                }
+            }
+        },
+        "id": 6
+    }
 ]
 
 ###
 
-POST http://localhost:3000
+POST http://localhost:3000/rpc
 Content-Type: application/json
 
 [
-	{
-		"topic": "TopicName",
-		"message": {
-			"property": "value",
-			"object": {
-				"a": 1
-			}
-		}
-	}
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": [
+            "first"
+        ],
+        "id": 1
+    }
+]
+
+###
+
+POST http://localhost:3000/rpc
+Content-Type: application/json
+
+[
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "firstTopic",
+            "message": {
+                "property": "value",
+                "object": {
+                    "a": 1
+                }
+            }
+        },
+        "id": 1
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "secondTopic",
+            "message": {
+                "body": "Message body"
+            }
+        },
+        "id": 2
+    }
 ]
 
 ###
