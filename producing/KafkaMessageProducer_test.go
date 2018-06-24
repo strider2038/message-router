@@ -1,4 +1,4 @@
-package messaging
+package producing
 
 import (
 	"context"
@@ -25,7 +25,7 @@ type MockKafkaWriterFlyweight struct {
 	mock.Mock
 }
 
-func (mock *MockKafkaWriterFlyweight) GetWriterForTopic(topicName string) KafkaWriter {
+func (mock *MockKafkaWriterFlyweight) CreateWriterForTopic(topicName string) KafkaWriter {
 	args := mock.Called(topicName)
 
 	return args.Get(0).(KafkaWriter)
@@ -40,7 +40,7 @@ func TestKafkaMessageProducer_Produce_Message_MessageSentToKafkaByWriter(t *test
 	factory := MockKafkaWriterFlyweight{}
 	producer := NewKafkaMessageProducer(&factory)
 	message := data.MessagePack{"topic", data.Message{}}
-	factory.On("GetWriterForTopic", "topic").Return(writer)
+	factory.On("CreateWriterForTopic", "topic").Return(writer)
 	writer.On("WriteMessages").Return(nil)
 
 	err := producer.Produce(&message)
@@ -54,7 +54,7 @@ func TestKafkaMessageProducer_Produce_Message_MessageSentFailedAndErrorReturned(
 	factory := MockKafkaWriterFlyweight{}
 	producer := NewKafkaMessageProducer(&factory)
 	message := data.MessagePack{"topic", data.Message{}}
-	factory.On("GetWriterForTopic", "topic").Return(writer)
+	factory.On("CreateWriterForTopic", "topic").Return(writer)
 	writer.On("WriteMessages").Return(errors.New("error"))
 
 	err := producer.Produce(&message)

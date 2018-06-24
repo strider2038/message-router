@@ -5,13 +5,13 @@ import (
 	"fmt"
 
 	"bitbucket.org/strider2038/event-router/data"
-	"bitbucket.org/strider2038/event-router/messaging"
+	"bitbucket.org/strider2038/event-router/producing"
 	"github.com/asaskevich/govalidator"
 	"github.com/bitwurx/jrpc2"
 )
 
 type messageDispatcher struct {
-	producer messaging.MessageProducer
+	producer producing.MessageProducer
 }
 
 func (dispatcher *messageDispatcher) Handle(params json.RawMessage) (interface{}, *jrpc2.ErrorObject) {

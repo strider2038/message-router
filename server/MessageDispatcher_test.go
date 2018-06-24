@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"bitbucket.org/strider2038/event-router/messaging"
+	"bitbucket.org/strider2038/event-router/producing"
 	"github.com/bitwurx/jrpc2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -74,7 +74,7 @@ func TestMessageDispatcher_Handle_InvalidParamsBody_ErrorReturned(t *testing.T) 
 }
 
 func TestMessageDispatcher_Handle_ValidMessage_MessageProducedAndSuccessResultReturned(t *testing.T) {
-	producer := messaging.MessageProducerMock{}
+	producer := producing.MessageProducerMock{}
 	dispatcher := messageDispatcher{&producer}
 	producer.On("Produce", mock.Anything).Return(nil)
 
@@ -86,7 +86,7 @@ func TestMessageDispatcher_Handle_ValidMessage_MessageProducedAndSuccessResultRe
 }
 
 func TestMessageDispatcher_Handle_ValidMessage_ProducingFailedAndErrorReturned(t *testing.T) {
-	producer := messaging.MessageProducerMock{}
+	producer := producing.MessageProducerMock{}
 	dispatcher := messageDispatcher{&producer}
 	producer.On("Produce", mock.Anything).Return(errors.New("producing failed"))
 

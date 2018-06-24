@@ -1,4 +1,4 @@
-package messaging
+package producing
 
 import (
 	"bitbucket.org/strider2038/event-router/data"

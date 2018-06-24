@@ -1,4 +1,4 @@
-package messaging
+package producing
 
 import "github.com/segmentio/kafka-go"
 
@@ -13,7 +13,7 @@ func NewKafkaWriterFlyweightFactory(config kafka.WriterConfig) *kafkaWriterFlywe
 	return &kafkaWriterFlyweightFactory{pool, config}
 }
 
-func (factory *kafkaWriterFlyweightFactory) GetWriterForTopic(topicName string) KafkaWriter {
+func (factory *kafkaWriterFlyweightFactory) CreateWriterForTopic(topicName string) KafkaWriter {
 	if writer, exists := factory.pool[topicName]; exists {
 		return &writer
 	}

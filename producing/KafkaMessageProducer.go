@@ -1,4 +1,4 @@
-package messaging
+package producing
 
 import (
 	"context"
@@ -9,11 +9,11 @@ import (
 )
 
 type kafkaMessageProducer struct {
-	factory KafkaWriterFlyweight
+	writerFactory KafkaWriterFactory
 }
 
-func NewKafkaMessageProducer(factory KafkaWriterFlyweight) *kafkaMessageProducer {
-	return &kafkaMessageProducer{factory}
+func NewKafkaMessageProducer(writerFactory KafkaWriterFactory) *kafkaMessageProducer {
+	return &kafkaMessageProducer{writerFactory}
 }
 
 func (producer *kafkaMessageProducer) Produce(message *data.MessagePack) error {
@@ -23,7 +23,7 @@ func (producer *kafkaMessageProducer) Produce(message *data.MessagePack) error {
 	kafkaMessage.Key = messageKey
 	kafkaMessage.Value = messageValue
 
-	writer := producer.factory.GetWriterForTopic(message.Topic)
+	writer := producer.writerFactory.CreateWriterForTopic(message.Topic)
 
 	return writer.WriteMessages(context.Background(), kafkaMessage)
 }

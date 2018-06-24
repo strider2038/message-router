@@ -1,4 +1,4 @@
-package messaging
+package producing
 
 import (
 	"context"
