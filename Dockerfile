@@ -12,6 +12,10 @@ WORKDIR "/go/src/bitbucket.org/strider2038/event-router"
 
 RUN dep ensure \
     && go build \
-    && chmod +x event-router
+    && chmod +x event-router \
+    && mkdir /app \
+    && cp event-router /app/event-router
 
-ENTRYPOINT [ "event-router" ]
+WORKDIR "/app"
+
+ENTRYPOINT [ "/app/event-router" ]

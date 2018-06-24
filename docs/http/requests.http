@@ -89,9 +89,11 @@ Content-Type: application/json
         "params": {
             "topic": "firstTopic",
             "message": {
-                "property": "value",
-                "object": {
-                    "a": 1
+                "value": {
+                    "property": "value",
+                    "object": {
+                        "a": 1
+                    }
                 }
             }
         },
@@ -103,7 +105,9 @@ Content-Type: application/json
         "params": {
             "topic": "secondTopic",
             "message": {
-                "body": "Message body"
+                "value": {
+                    "body": "Message body"
+                }
             }
         },
         "id": 2

@@ -2,8 +2,10 @@ package messaging
 
 import (
 	"context"
+	"errors"
 	"testing"
 
+	"bitbucket.org/strider2038/event-router/data"
 	"github.com/segmentio/kafka-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -33,18 +35,30 @@ func (mock *MockKafkaWriterFlyweight) PoolSize() int {
 	panic("not implemented")
 }
 
-func TestKafkaMessageProducer_Produce_singleMessage_messageSentToKafkaByWriter(t *testing.T) {
+func TestKafkaMessageProducer_Produce_Message_MessageSentToKafkaByWriter(t *testing.T) {
 	writer := &MockKafkaWriter{}
 	factory := MockKafkaWriterFlyweight{}
 	producer := NewKafkaMessageProducer(&factory)
-	messageContents := make(map[string]interface{})
-	messages := make([]RoutedMessage, 0)
-	messages = append(messages, RoutedMessage{"topic", messageContents})
+	message := data.MessagePack{"topic", data.Message{}}
 	factory.On("GetWriterForTopic", "topic").Return(writer)
 	writer.On("WriteMessages").Return(nil)
 
-	result := producer.Produce(messages)
+	err := producer.Produce(&message)
 
 	factory.Mock.AssertExpectations(t)
-	assert.Nil(t, result)
+	assert.Nil(t, err)
+}
+
+func TestKafkaMessageProducer_Produce_Message_MessageSentFailedAndErrorReturned(t *testing.T) {
+	writer := &MockKafkaWriter{}
+	factory := MockKafkaWriterFlyweight{}
+	producer := NewKafkaMessageProducer(&factory)
+	message := data.MessagePack{"topic", data.Message{}}
+	factory.On("GetWriterForTopic", "topic").Return(writer)
+	writer.On("WriteMessages").Return(errors.New("error"))
+
+	err := producer.Produce(&message)
+
+	factory.Mock.AssertExpectations(t)
+	assert.Equal(t, "error", err.Error())
 }

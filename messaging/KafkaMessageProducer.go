@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
+	"bitbucket.org/strider2038/event-router/data"
 	"github.com/segmentio/kafka-go"
 )
 
@@ -15,14 +16,14 @@ func NewKafkaMessageProducer(factory KafkaWriterFlyweight) *kafkaMessageProducer
 	return &kafkaMessageProducer{factory}
 }
 
-func (producer *kafkaMessageProducer) Produce(messages []RoutedMessage) error {
-	for _, message := range messages {
-		writer := producer.factory.GetWriterForTopic(message.Topic)
-		kafkaMessage := kafka.Message{}
-		contents, _ := json.Marshal(message.Message)
-		kafkaMessage.Value = contents
-		writer.WriteMessages(context.Background(), kafkaMessage)
-	}
+func (producer *kafkaMessageProducer) Produce(message *data.MessagePack) error {
+	kafkaMessage := kafka.Message{}
+	messageKey, _ := json.Marshal(message.Message.Key)
+	messageValue, _ := json.Marshal(message.Message.Value)
+	kafkaMessage.Key = messageKey
+	kafkaMessage.Value = messageValue
 
-	return nil
+	writer := producer.factory.GetWriterForTopic(message.Topic)
+
+	return writer.WriteMessages(context.Background(), kafkaMessage)
 }

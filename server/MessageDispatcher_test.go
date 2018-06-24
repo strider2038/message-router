@@ -2,10 +2,13 @@ package server
 
 import (
 	"encoding/json"
+	"errors"
 	"testing"
 
+	"bitbucket.org/strider2038/event-router/messaging"
 	"github.com/bitwurx/jrpc2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 const invalidJsonRequest = `{`
@@ -68,4 +71,27 @@ func TestMessageDispatcher_Handle_InvalidParamsBody_ErrorReturned(t *testing.T) 
 			assert.Equal(t, jrpc2.InvalidParamsCode, err.Code)
 		})
 	}
+}
+
+func TestMessageDispatcher_Handle_ValidMessage_MessageProducedAndSuccessResultReturned(t *testing.T) {
+	producer := messaging.MessageProducerMock{}
+	dispatcher := messageDispatcher{&producer}
+	producer.On("Produce", mock.Anything).Return(nil)
+
+	result, err := dispatcher.Handle(json.RawMessage(validRequestBody))
+
+	assert.Nil(t, err)
+	assert.Equal(t, "Message was successfully dispatched to topic \"topic\".", result)
+	producer.AssertExpectations(t)
+}
+
+func TestMessageDispatcher_Handle_ValidMessage_ProducingFailedAndErrorReturned(t *testing.T) {
+	producer := messaging.MessageProducerMock{}
+	dispatcher := messageDispatcher{&producer}
+	producer.On("Produce", mock.Anything).Return(errors.New("producing failed"))
+
+	_, err := dispatcher.Handle(json.RawMessage(validRequestBody))
+
+	producer.AssertExpectations(t)
+	assert.Equal(t, jrpc2.InternalErrorCode, err.Code)
 }
