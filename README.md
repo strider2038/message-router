@@ -4,8 +4,11 @@ Microservice for dispatching messages received by HTTP to Apache Kafka.
 
 ## TODO list
 
-* [ ] implement JSON RPC v2 protocol
-* [ ] validate incoming json messages
+* [x] implement JSON RPC v2 protocol
+* [x] validate incoming json messages
+* [ ] config package
+* [ ] ci in Travis
+* [ ] coverage and code quality reports
 
 ## Future tasks
 
