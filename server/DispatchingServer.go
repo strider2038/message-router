@@ -1,7 +1,9 @@
 package server
 
 import (
+	"bitbucket.org/strider2038/event-router/config"
 	"bitbucket.org/strider2038/event-router/producing"
+	"fmt"
 	"github.com/bitwurx/jrpc2"
 	"github.com/segmentio/kafka-go"
 )
@@ -10,18 +12,20 @@ type DispatchingServer interface {
 	Start()
 }
 
-func NewDispatchingServer() DispatchingServer {
+func NewDispatchingServer(config config.Config) DispatchingServer {
 	var headers map[string]string
 
-	config := kafka.WriterConfig{
-		Brokers:  []string{"kafka:9092"},
+	writerConfig := kafka.WriterConfig{
+		Brokers:  config.Brokers,
 		Balancer: &kafka.LeastBytes{},
 	}
-	factory := producing.NewKafkaWriterFlyweightFactory(config)
+
+	factory := producing.NewKafkaWriterFlyweightFactory(writerConfig)
 	producer := producing.NewKafkaMessageProducer(factory)
 	dispatcher := messageDispatcher{producer}
 
-	server := jrpc2.NewServer(":3000", "/rpc", headers)
+	host := fmt.Sprintf(":%d", config.Port)
+	server := jrpc2.NewServer(host, "/rpc", headers)
 	server.Register("dispatch", jrpc2.Method{Method: dispatcher.Handle})
 
 	return server

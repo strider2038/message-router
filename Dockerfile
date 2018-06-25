@@ -1,5 +1,8 @@
 FROM golang:alpine
 
+ENV MESSAGE_ROUTER_KAFKA_BROKERS="localhost:9092" \
+    MESSAGE_ROUTER_PORT=3000
+
 RUN set -xe \
     && apk add --update \
         git \

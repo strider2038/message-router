@@ -1,8 +1,12 @@
 package main
 
-import "bitbucket.org/strider2038/event-router/server"
+import (
+	config2 "bitbucket.org/strider2038/event-router/config"
+	"bitbucket.org/strider2038/event-router/server"
+)
 
 func main() {
-	dispatchingServer := server.NewDispatchingServer()
+	config := config2.LoadConfigFromEnvironment()
+	dispatchingServer := server.NewDispatchingServer(config)
 	dispatchingServer.Start()
 }
