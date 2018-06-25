@@ -15,10 +15,10 @@ WORKDIR "/go/src/github.com/strider2038/message-router"
 
 RUN dep ensure \
     && go build \
-    && chmod +x event-router \
+    && chmod +x message-router \
     && mkdir /app \
-    && cp event-router /app/event-router
+    && cp message-router /app/message-router
 
 WORKDIR "/app"
 
-ENTRYPOINT [ "/app/event-router" ]
+ENTRYPOINT [ "/app/message-router" ]
