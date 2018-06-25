@@ -1,8 +1,8 @@
 package producing
 
 import (
-	"bitbucket.org/strider2038/event-router/data"
 	"github.com/stretchr/testify/mock"
+	"github.com/strider2038/message-router/data"
 )
 
 type MessageProducerMock struct {

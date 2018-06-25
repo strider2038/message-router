@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	"bitbucket.org/strider2038/event-router/data"
 	"github.com/segmentio/kafka-go"
+	"github.com/strider2038/message-router/data"
 )
 
 type kafkaMessageProducer struct {

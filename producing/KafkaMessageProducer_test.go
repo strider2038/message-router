@@ -5,10 +5,10 @@ import (
 	"errors"
 	"testing"
 
-	"bitbucket.org/strider2038/event-router/data"
 	"github.com/segmentio/kafka-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/strider2038/message-router/data"
 )
 
 type MockKafkaWriter struct {

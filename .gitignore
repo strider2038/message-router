@@ -2,4 +2,4 @@
 vendor/
 
 # compiled application
-event-router
+message-router

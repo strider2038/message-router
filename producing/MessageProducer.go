@@ -1,7 +1,7 @@
 package producing
 
 import (
-	"bitbucket.org/strider2038/event-router/data"
+	"github.com/strider2038/message-router/data"
 )
 
 type MessageProducer interface {

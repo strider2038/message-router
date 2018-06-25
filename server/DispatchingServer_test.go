@@ -1,8 +1,8 @@
 package server
 
 import (
-	"bitbucket.org/strider2038/event-router/config"
 	"github.com/stretchr/testify/assert"
+	"github.com/strider2038/message-router/config"
 	"testing"
 )
 

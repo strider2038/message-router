@@ -1,11 +1,11 @@
 package server
 
 import (
-	"bitbucket.org/strider2038/event-router/config"
-	"bitbucket.org/strider2038/event-router/producing"
 	"fmt"
 	"github.com/bitwurx/jrpc2"
 	"github.com/segmentio/kafka-go"
+	"github.com/strider2038/message-router/config"
+	"github.com/strider2038/message-router/producing"
 )
 
 type DispatchingServer interface {

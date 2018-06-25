@@ -1,8 +1,8 @@
 package main
 
 import (
-	config2 "bitbucket.org/strider2038/event-router/config"
-	"bitbucket.org/strider2038/event-router/server"
+	config2 "github.com/strider2038/message-router/config"
+	"github.com/strider2038/message-router/server"
 )
 
 func main() {

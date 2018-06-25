@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"bitbucket.org/strider2038/event-router/data"
-	"bitbucket.org/strider2038/event-router/producing"
 	"github.com/asaskevich/govalidator"
 	"github.com/bitwurx/jrpc2"
+	"github.com/strider2038/message-router/data"
+	"github.com/strider2038/message-router/producing"
 )
 
 type messageDispatcher struct {

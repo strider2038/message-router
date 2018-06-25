@@ -5,10 +5,10 @@ import (
 	"errors"
 	"testing"
 
-	"bitbucket.org/strider2038/event-router/producing"
 	"github.com/bitwurx/jrpc2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/strider2038/message-router/producing"
 )
 
 const invalidJsonRequest = `{`

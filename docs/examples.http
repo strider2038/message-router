@@ -1,0 +1,36 @@
+POST http://localhost:3000/rpc
+Content-Type: application/json
+
+[
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "firstTopic",
+            "message": {
+                "value": {
+                    "property": "value",
+                    "object": {
+                        "a": 1
+                    }
+                }
+            }
+        },
+        "id": 1
+    },
+    {
+        "jsonrpc": "2.0",
+        "method": "dispatch",
+        "params": {
+            "topic": "secondTopic",
+            "message": {
+                "value": {
+                    "body": "Message body"
+                }
+            }
+        },
+        "id": 2
+    }
+]
+
+###
