@@ -8,7 +8,7 @@ import (
 	"github.com/bitwurx/jrpc2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/strider2038/message-router/producing"
+	"github.com/strider2038/message-router/data"
 )
 
 const invalidJsonRequest = `{`
@@ -34,6 +34,16 @@ const validRequestBody = `
 	}
 }
 `
+
+type messageProducerMock struct {
+	mock.Mock
+}
+
+func (mock *messageProducerMock) Produce(message *data.MessagePack) error {
+	arguments := mock.Called(message)
+
+	return arguments.Error(0)
+}
 
 func TestMessageDispatcher_Handle_InvalidRequestBody_ErrorReturned(t *testing.T) {
 	dispatcher := messageDispatcher{}
@@ -74,7 +84,7 @@ func TestMessageDispatcher_Handle_InvalidParamsBody_ErrorReturned(t *testing.T) 
 }
 
 func TestMessageDispatcher_Handle_ValidMessage_MessageProducedAndSuccessResultReturned(t *testing.T) {
-	producer := producing.MessageProducerMock{}
+	producer := messageProducerMock{}
 	dispatcher := messageDispatcher{&producer}
 	producer.On("Produce", mock.Anything).Return(nil)
 
@@ -86,7 +96,7 @@ func TestMessageDispatcher_Handle_ValidMessage_MessageProducedAndSuccessResultRe
 }
 
 func TestMessageDispatcher_Handle_ValidMessage_ProducingFailedAndErrorReturned(t *testing.T) {
-	producer := producing.MessageProducerMock{}
+	producer := messageProducerMock{}
 	dispatcher := messageDispatcher{&producer}
 	producer.On("Produce", mock.Anything).Return(errors.New("producing failed"))
 

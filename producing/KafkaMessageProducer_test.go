@@ -11,33 +11,33 @@ import (
 	"github.com/strider2038/message-router/data"
 )
 
-type MockKafkaWriter struct {
+type mockKafkaWriter struct {
 	mock.Mock
 }
 
-func (mock MockKafkaWriter) WriteMessages(ctx context.Context, msgs ...kafka.Message) error {
+func (mock mockKafkaWriter) WriteMessages(ctx context.Context, msgs ...kafka.Message) error {
 	args := mock.Called()
 
 	return args.Error(0)
 }
 
-type MockKafkaWriterFlyweight struct {
+type mockKafkaWriterFlyweight struct {
 	mock.Mock
 }
 
-func (mock *MockKafkaWriterFlyweight) CreateWriterForTopic(topicName string) KafkaWriter {
+func (mock *mockKafkaWriterFlyweight) CreateWriterForTopic(topicName string) KafkaWriter {
 	args := mock.Called(topicName)
 
 	return args.Get(0).(KafkaWriter)
 }
 
-func (mock *MockKafkaWriterFlyweight) PoolSize() int {
+func (mock *mockKafkaWriterFlyweight) PoolSize() int {
 	panic("not implemented")
 }
 
 func TestKafkaMessageProducer_Produce_Message_MessageSentToKafkaByWriter(t *testing.T) {
-	writer := &MockKafkaWriter{}
-	factory := MockKafkaWriterFlyweight{}
+	writer := &mockKafkaWriter{}
+	factory := mockKafkaWriterFlyweight{}
 	producer := NewKafkaMessageProducer(&factory)
 	message := data.MessagePack{"topic", data.Message{}}
 	factory.On("CreateWriterForTopic", "topic").Return(writer)
@@ -50,8 +50,8 @@ func TestKafkaMessageProducer_Produce_Message_MessageSentToKafkaByWriter(t *test
 }
 
 func TestKafkaMessageProducer_Produce_Message_MessageSentFailedAndErrorReturned(t *testing.T) {
-	writer := &MockKafkaWriter{}
-	factory := MockKafkaWriterFlyweight{}
+	writer := &mockKafkaWriter{}
+	factory := mockKafkaWriterFlyweight{}
 	producer := NewKafkaMessageProducer(&factory)
 	message := data.MessagePack{"topic", data.Message{}}
 	factory.On("CreateWriterForTopic", "topic").Return(writer)
