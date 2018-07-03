@@ -8,10 +8,12 @@ import (
 	"github.com/strider2038/message-router/producing"
 )
 
+// HTTP server for handling messages received by HTTP protocol (JSON RPC v2)
 type DispatchingServer interface {
 	Start()
 }
 
+// Dispatching server constructor
 func NewDispatchingServer(config config.Config) DispatchingServer {
 	var headers map[string]string
 

@@ -6,11 +6,13 @@ import (
 	"strings"
 )
 
+// Application configuration
 type Config struct {
 	Brokers []string
 	Port    int
 }
 
+// Loading configuration from environment variables
 func LoadConfigFromEnvironment() Config {
 	brokers := os.Getenv("MESSAGE_ROUTER_KAFKA_BROKERS")
 	envPort := os.Getenv("MESSAGE_ROUTER_PORT")

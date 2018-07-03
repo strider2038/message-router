@@ -14,3 +14,7 @@ script:
   - docker build --pull --tag "strider2038/message-router" .
   - docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASSWORD"
   - docker push strider2038/message-router
+  - bash <(curl -s https://raw.githubusercontent.com/vehsamrak/go-multi-package-coverage/1.0.0/test.sh)
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
